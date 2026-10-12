@@ -9,6 +9,7 @@ const Login = () => {
   // React hooks
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Redux hooks.
   const dispatch = useDispatch();
@@ -35,8 +36,7 @@ const Login = () => {
       // Re-direct user to home/dashboard page.
       navigate("/");
     } catch (error) {
-      console.warn(`Error: ${error.message}`);
-      throw new Error(`Error: ${error.message}`);
+        setErrorMessage(error?.message || "Something went wrong");
     }
   };
 
@@ -72,6 +72,7 @@ const Login = () => {
             </fieldset>
           </div>
           <div className="card-actions justify-center">
+            {errorMessage && <p>{errorMessage}</p> }
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
             </button>

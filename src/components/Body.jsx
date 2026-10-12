@@ -24,7 +24,7 @@ const Body = () => {
       } catch (error) {
         if (error.status === 401) {
           navigate("/login");
-          console.error(`Error fetching user profile. Please login again. ${error}`)
+          console.warn(`Error fetching user profile. Please login again. ${error.message}`)
         }
       }
     }
