@@ -1,10 +1,17 @@
+import { useSelector } from "react-redux";
+
 const NavBar = () => {
+
+  const  user  = useSelector(store => store.user);
+  console.log(user);
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">DevTinder</a>
       </div>
-      <div className="flex gap-2">
+      {
+        user &&       <div className="flex gap-2">
         {/* <input
             type="text"
             placeholder="Search"
@@ -19,7 +26,7 @@ const NavBar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user.photoUrl}
               />
             </div>
           </div>
@@ -42,6 +49,8 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
+      }
+
     </div>
   );
 };

@@ -1,23 +1,39 @@
 import axios from "axios";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { addUser } from "./utils/userSlice";
 
 const Login = () => {
+  // React hooks
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [emailId, setEmailId] = useState("");
-    const [password, setPassword] = useState(""); 
+  // Redux hooks.
+  const dispatch = useDispatch();
 
-    const handleLogin = async () => {
-      try {
-        const res = await axios.post("http://localhost:3000/login", {
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/login",
+        {
           emailId,
           password,
-        }, { withCredentials: true });
-      } catch (error) {
-        console.log(`Error: ${error.message}`);
-      }
-    };
+        },
+        { withCredentials: true },
+      );
+      const { data } = res.data;
 
+      if (!data) {
+        console.warn(`Error: ${error.message}`);
+        throw new Error("Error logging in, please try again.");
+      }
+      // Adding loggedIn user to the user state slice by dispatching addUser action.
+      dispatch(addUser(data));
+    } catch (error) {
+      console.warn(`Error: ${error.message}`);
+      throw new Error(`Error: ${error.message}`);
+    }
+  };
 
   return (
     <div className="flex justify-center my-10">
@@ -37,7 +53,7 @@ const Login = () => {
                 value={emailId}
                 onChange={(e) => setEmailId(e.target.value)}
               />
-                            <label className="label" htmlFor="name">
+              <label className="label" htmlFor="name">
                 Password
               </label>
               <input
@@ -51,7 +67,9 @@ const Login = () => {
             </fieldset>
           </div>
           <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+            <button className="btn btn-primary" onClick={handleLogin}>
+              Login
+            </button>
           </div>
         </div>
       </div>
