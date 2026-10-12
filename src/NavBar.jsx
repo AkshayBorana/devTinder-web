@@ -11,13 +11,9 @@ const NavBar = () => {
         <a className="btn btn-ghost text-xl">DevTinder</a>
       </div>
       {
-        user &&       <div className="flex gap-2">
-        {/* <input
-            type="text"
-            placeholder="Search"
-            className="input w-24 md:w-auto"
-          /> */}
-        <div className="dropdown dropdown-end">
+        user &&   <div className="flex gap-2">
+        <div className="dropdown dropdown-end flex gap-2">
+          Welcome { user.firstName }
           <div
             tabIndex={0}
             role="button"
@@ -25,7 +21,7 @@ const NavBar = () => {
           >
             <div className="w-10 rounded-full">
               <img
-                alt="Tailwind CSS Navbar component"
+                alt="User photo"
                 src={user.photoUrl}
               />
             </div>

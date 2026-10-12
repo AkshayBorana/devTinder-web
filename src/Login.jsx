@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "./utils/userSlice";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   // React hooks
@@ -10,6 +11,7 @@ const Login = () => {
 
   // Redux hooks.
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -29,6 +31,8 @@ const Login = () => {
       }
       // Adding loggedIn user to the user state slice by dispatching addUser action.
       dispatch(addUser(data));
+      // Re-direct user to home/dashboard page.
+      navigate("/");
     } catch (error) {
       console.warn(`Error: ${error.message}`);
       throw new Error(`Error: ${error.message}`);
