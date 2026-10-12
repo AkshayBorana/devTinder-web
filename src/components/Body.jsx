@@ -1,8 +1,38 @@
+import { BASE_URL } from "../utils/constants";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useEffect } from "react";
 
 const Body = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const fetchUserProfile = async () => {
+
+    try {
+      const user = await axios.get(`${BASE_URL}/profile/view`, {
+        withCredentials: true,
+      });
+      const { data } = user;
+      dispatch(addUser(data));
+    } catch (error) {
+      if (error.status === 401) {
+        navigate("/login");
+        console.error(`Error fetching user profile. Please login again. ${error}`)
+      }
+    }
+  };
+
+  // useEffect hooks gets called after/once the component is loaded/rendered in the DOM.
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
   return (
     <>
       <NavBar />
