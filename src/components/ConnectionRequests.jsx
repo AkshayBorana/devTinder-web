@@ -8,11 +8,22 @@ const ConnectionRequests = () => {
     const dispatch = useDispatch();
     const connectionRequests = useSelector(store => store.connectionRequests);
 
+    // Fetch all the connection requests that a user has received.
     const fetchConnectionRequests = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/user/requests/received`, { withCredentials: true });
             const data = res.data.data;
             dispatch(addConnectionRequests(data));
+        } catch (error) {
+            console.warn(error);
+        }
+    }
+
+    // Review a connection request by either Accepting/Rejecting it.
+    const handleReviewRequest = async (status, id) => {
+        try {
+            const res = await axios.post(`${BASE_URL}/request/review/${status}/${id}`, {} , { withCredentials: true });
+            console.log(res);
         } catch (error) {
             console.warn(error);
         }
@@ -35,13 +46,12 @@ const ConnectionRequests = () => {
         <div className="text-center pt-3 my-5">
           <h2 className="text-bold text-3xl">Connection Requests</h2>
           {connectionRequests.map((connectionReq) => {
-            const { firstName, lastName, age, gender, about, photoUrl } =
-              connectionReq.fromUserId;
+            const { firstName, lastName, age, gender, about, photoUrl } = connectionReq.fromUserId;
+            const { _id } = connectionReq;
 
             return (
-              <div className="bg-base-100 w-1/2 mx-auto my-2 pb-4">
+              <div key={_id} className="bg-base-100 w-1/2 mx-auto my-2 pb-4">
                 <div
-                  key={connectionReq._id}
                   className="flex m-4 p-4 rounded-lg "
                 >
                   <div>
@@ -64,8 +74,8 @@ const ConnectionRequests = () => {
                   </div>
                 </div>
                 <div className="justify-around mb-2">
-                    <button className="btn btn-primary mx-10">Reject</button>
-                    <button className="btn btn-secondary">Accept</button>
+                    <button className="btn btn-primary mx-10" onClick={() => handleReviewRequest('rejected', _id)}>Reject</button>
+                    <button className="btn btn-secondary" onClick={() => handleReviewRequest('accepted', _id)}>Accept</button>
                 </div>
               </div>
             );
