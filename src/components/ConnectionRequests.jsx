@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addConnectionRequests } from "../utils/requestsSlice";
+import { addConnectionRequests, removeConnectionRequests } from "../utils/requestsSlice";
 
 const ConnectionRequests = () => {
     const dispatch = useDispatch();
@@ -24,6 +24,7 @@ const ConnectionRequests = () => {
         try {
             const res = await axios.post(`${BASE_URL}/request/review/${status}/${id}`, {} , { withCredentials: true });
             console.log(res);
+            dispatch(removeConnectionRequests(id))
         } catch (error) {
             console.warn(error);
         }

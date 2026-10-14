@@ -5,7 +5,10 @@ const connectionRequestsSlice = createSlice({
     initialState: null,
     reducers: {
         addConnectionRequests: (state, action) => action.payload,
-        removeConnectionRequests: (state, action) => null
+        removeConnectionRequests: (state, action) => {
+            const updatedState = state.filter(req => req._id !== action.payload);
+            return updatedState;
+        }
     }
 });
 
