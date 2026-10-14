@@ -24,6 +24,9 @@ const Feed = () => {
         getFeed();
     }, [])
 
+    if(!feed?.length) {
+      return <div>No new profile available.</div>
+    }
 
     return (
       <>
