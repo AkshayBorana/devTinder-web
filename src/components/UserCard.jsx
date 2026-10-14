@@ -24,9 +24,7 @@ const UserCard = ({user}) => {
             <img src={photoUrl} alt="User image"></img>
           </figure>
           <div className="card-body">
-            <h2 className="">
-              {firstName} {lastName}
-            </h2>
+            <h2>{firstName} {lastName}</h2>
             <p>{about}</p>
             {age && gender && <p>{age}, {gender}</p>}
             <div className="justify-around">

@@ -13,7 +13,7 @@ const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoginForm, setIsLoginForm] = useState(false);
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
   // Redux hooks.
   const dispatch = useDispatch();
@@ -60,12 +60,11 @@ const Login = () => {
         { withCredentials: true },
       );
 
-
       if(res.status === 200) {
         const user = res?.data?.data;
         dispatch(addUser(user));
         //After successfull signup either re-direct to feeds page to you can ask the user to login.
-        navigate('/');
+        navigate('/profile');
       }
     } catch (error) {
       console.warn(error);
