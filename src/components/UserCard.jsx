@@ -6,7 +6,7 @@ import { removeUserFromFeed } from "../utils/feedSlice";
 const UserCard = ({user}) => {
   const dispatch = useDispatch();
 
-  const { firstName, lastName, about, photoUrl, age, _id} = user;
+  const { firstName, lastName, about, photoUrl, age, _id, gender} = user;
 
   const handleSendConnectionRequest = async(status, id) => {
     try {
@@ -28,7 +28,7 @@ const UserCard = ({user}) => {
               {firstName} {lastName}
             </h2>
             <p>{about}</p>
-            {age && <p>{age}</p>}
+            {age && gender && <p>{age}, {gender}</p>}
             <div className="justify-around">
               <button
                 className="btn btn-primary mx-10"
